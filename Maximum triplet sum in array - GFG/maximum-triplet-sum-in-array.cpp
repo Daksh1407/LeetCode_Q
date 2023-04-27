@@ -7,16 +7,25 @@ using namespace std;
 class Solution{
     public:
     int maxTripletSum(int arr[], int n) {
-        sort(arr, arr + n);
-        int sum = 0;
-        int i = n - 1;
-        int cnt = 3;
-        while(cnt--) {
-            sum += arr[i];
-            i--;
+        int max1 = INT_MIN;
+        int max2 = INT_MIN;
+        int max3 = INT_MIN;
+        
+        for(int i = 0; i < n; i++) {
+            if(arr[i] > max1) {
+                max3 = max2;
+                max2 = max1;
+                max1 = arr[i];
+            }
+            else if(arr[i] > max2) {
+                max3 = max2;
+                max2 = arr[i];
+            }
+            else if(arr[i] > max3) {
+                max3 = arr[i];
+            }
         }
-        return sum;
-    	// Complete the function
+        return max1 + max2 + max3;
     }
 };
 
