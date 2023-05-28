@@ -45,64 +45,60 @@ struct Node
 */
 class Solution{
     public:
-    struct Node* modifyTheList(struct Node *head)
-     {
+    Node* getMid(Node* head) {
+        Node* slow = head;
+        Node* fast = head->next;
         
-        if( head->next == NULL)
-            return head;
+        while(fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        
+        return slow;
+    }
+    
+    void reverse(Node* &head) {
+        if(head->next == NULL) return;
+        
+        Node* curr = head;
+        Node* prev = NULL;
+        Node* forward = NULL;
+        
+        while(curr != NULL) {
+            forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+        }
+        
+        head = prev;
+    }
+    
+    struct Node* modifyTheList(struct Node *head) {
+        if(head == NULL || head->next == NULL) return head;
+        
+        // Getting the middle node and reversing the 2nd half
+        Node* mid = getMid(head);
+        reverse(mid->next);
+        
+        Node* tmp = mid->next;
+        Node* start = head;
+        while(tmp != NULL) {
+            // Updating the data
+            int x = start->data;
+            start->data = tmp->data - x;
+            tmp->data = x;
             
-       Node* slow = head , *fast = head , *prev1 = NULL;
-       
-       while(fast and fast->next)
-       {
-           prev1 = slow;
-           slow = slow->next;
-           fast = fast->next->next;
-       }
-       prev1->next = NULL;
-       Node* curr = slow , *prev = NULL;
-       
-       while(curr)
-       {
-           Node* next = curr->next;
-           curr->next = prev;
-           prev = curr;
-           curr = next;
-       }
-       
-       Node* curr1 = head , *curr2 = prev;
-       
-       while(curr1)
-       {
-           int temp = curr1->data;
-           curr1->data = (curr2->data - curr1->data);
-           curr2->data = temp;
-           
-           curr1 = curr1->next;
-           curr2 = curr2->next;
-       }
-       Node* curr3 = prev , *prev2 = NULL;
-       
-       while(curr3)
-       {
-           Node* next = curr3->next;
-           curr3->next = prev2;
-           prev2 = curr3;
-           curr3 = next;
-       }
-       prev1->next = prev2;
-       
-       return head;
-
-
+            // Updating the pointers
+            start = start->next;
+            tmp = tmp->next;
+        }
+        
+        reverse(mid->next);
+        
+        return head;
     }
 };
-
-/*
-    2 9 8 10 7 12
-    
-    
-*/
 
 //{ Driver Code Starts.
 int main()
