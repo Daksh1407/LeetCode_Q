@@ -146,7 +146,8 @@ vector<int> leftView(Node *root) {
                 q.push(node->right);
             if(i == 0)
                 v.push_back(node->data);
-           
+            else
+                continue;
         }
     }
     return v;
