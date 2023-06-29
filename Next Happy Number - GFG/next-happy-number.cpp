@@ -5,26 +5,28 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
 public:
-    bool solve(int N) {
-        if(N == 1 or N == 7)
-            return true;
-        if(N <= 9) return false;
-        
-        int sum = 0;
-        while(N != 0) {
-            int digit = N % 10;
-            sum += pow(digit, 2);
-            N /= 10;
-        }
-        return solve(sum);
-    }
     int nextHappy(int N){
-        ++N;
-        while(true) {
-            if(solve(N)) return N;
-            else ++N;
+        // code here
+        unordered_set<int> s;
+        int n = N + 1, i = N + 1;
+        s.insert(n);
+    
+        while (1) {
+            int sum = 0;
+            while (n > 0) {
+                sum += ((n % 10) * (n % 10));
+                n /= 10;
+            }
+            n = sum;
+    
+            if (n == 1)
+                break;
+            else if (s.find(n) != s.end())
+                n = ++i;
+            else
+                s.insert(n);
         }
-        return 0;
+        return i;
     }
 };
 
