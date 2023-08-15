@@ -19,7 +19,7 @@ class Solution{
                 zero--;
                 one++;
             }
-            ans = max(ans, a);
+            ans = max(ans, zero);
             if(zero < 0)
                 zero = 0;
         }
