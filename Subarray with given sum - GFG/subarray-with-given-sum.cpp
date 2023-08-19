@@ -9,19 +9,23 @@ class Solution
     public:
     //Function to find a continuous sub-array which adds up to a given number.
     vector<int> subarraySum(vector<int>arr, int n, long long s) {
+        int l = 0, r = 0;
         long long sum = 0;
-        int i = 0, j = 0;
-        while(j < n) {
-            sum += arr[j];
-            while(sum > s) 
-                sum -= arr[i++];
-            if(sum == s && i <= j)
-                return {i + 1, j + 1};
-            j++;
+        
+        while(r < n) {
+            sum += arr[r];
+            
+            while(sum > s ) {
+                sum -= arr[l++];
+            }
+            if(sum == s && l <= r)
+                return {l + 1, r + 1};
+            r++;
         }
         return {-1};
         // Your code here
     }
+    
 };
 
 //{ Driver Code Starts.
