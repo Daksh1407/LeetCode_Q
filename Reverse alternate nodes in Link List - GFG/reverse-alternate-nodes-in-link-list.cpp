@@ -76,30 +76,44 @@ void insert()
 class Solution
 {
     public:
-    struct Node *reverse(struct Node *head) {
-        Node *prev = NULL, *curr = head, *next = head;
-        while (next) {
-            next = next->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+    Node* reverse(Node* head) {
+        Node* prev = NULL;
+        Node* curr = NULL;
+        
+        while(head) {
+            curr = head->next;
+            head->next = prev;
+            prev = head;
+            head = curr;
         }
-        return prev;
+        head = prev;
+        return head;
     }
-    void rearrange(struct Node *even) {
-        Node *curr = even, *next = even, *odd = even->next;
-        //Extracting the lists
-        while(next && next->next) {
-            next = next->next;
-            curr->next = next->next;
-            curr = next;
+    
+    void rearrange(struct Node *head) {
+        if(!head) 
+            return ;
+        Node* p1 = head;
+        Node* p2 = head->next;
+        Node* temp = p2;
+        while(p1->next && p2->next) {
+            p1->next = p2->next;
+            p2->next = p2->next->next;
+            p1 = p1->next;
+            p2 = p2->next;
         }
-        //Reverse the extracted part
-        next = reverse(odd);
-        //Attaching the extracted part
-        curr = even;
-        while (curr->next) curr = curr->next;
-        curr->next = next;
+        
+        if(p2)
+            p1->next = NULL; // Set the next of the last node to NULL
+
+        Node* ptr = reverse(temp);
+
+        // If the original list has an odd number of nodes, we need to append the middle node back
+        if(p2)
+            p1->next = ptr;
+        else
+            p1->next = ptr; // Append the reversed list to the end
+        //v->next = ptr;
     }
 };
 
