@@ -107,22 +107,23 @@ class Solution{
     int height(Node* root) {
         if(!root)
             return 0;
-        int left = height(root->left);
-        int right = height(root->right);
+        int lh = height(root->left);
+        int rh = height(root->right);
         
-        return 1 + max(left, right);
+        return 1 + max(lh, rh);
     }
     bool isBalanced(Node *root)
     {
         if(!root)
             return 1;
-        int left = height(root->left);
-        int right = height(root->right);
         
-        if(abs(left - right) > 1)
+        int lh = height(root->left);
+        int rh = height(root->right);
+        
+        if(abs(lh - rh) > 1)
             return 0;
-            
-        return isBalanced(root->left) && isBalanced(root->right);
+        else
+            return isBalanced(root->left) && isBalanced();
         //  Your Code here
     }
 };
