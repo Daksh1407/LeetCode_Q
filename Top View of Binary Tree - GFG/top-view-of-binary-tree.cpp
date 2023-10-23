@@ -106,6 +106,7 @@ class Solution
         vector<int>v;
         if(!root)
             return {};
+            
         map<int, int>mp;                //vertical line, node->data
         queue<pair<int, Node*>> q;      // vertical line, node poped from queue
         q.push({0, root});
@@ -124,9 +125,10 @@ class Solution
             if(node->right)
                 q.push({line + 1, node->right});    
         }
-        for(auto it : mp) {
+        
+        for(auto it : mp)
             v.push_back(it.second);
-        }
+        
         
         return v;
         //Your code here
